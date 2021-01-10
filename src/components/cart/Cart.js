@@ -6,7 +6,7 @@ function Cart(props) {
   let total = 0;
   for (let i = 0; i < cart.length; i++) {
     const product = cart[i];
-    total = (total + product.price);
+    total = (total + product.price * product.quantity);
     total.toFixed(2)
   }
   let shipping = 0;
@@ -32,7 +32,14 @@ function Cart(props) {
       <p>Shipping cost: {shipping}</p>
       <p>Tax: {tax}</p>
       <p>Total Price: {grandTotal}</p>
+      <br />
       {/* use Number string to num */}
+      {/* <Link to="/review">
+        <button className="main-btn">Review Order</button>
+      </Link> */}
+      {
+        props.children
+      }
     </div>
   );
 }
