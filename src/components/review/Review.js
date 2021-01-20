@@ -8,15 +8,15 @@ import {
 import Cart from "../cart/Cart";
 import ReviewItem from "../reviewItem/ReviewItem";
 import giphyImg from "../../images/giphy.gif";
+import { useHistory } from "react-router-dom";
 
 const Review = () => {
   const [cart, setCart] = useState([]);
   //place order
   const [orderPlace, setOrderPlace] = useState(false);
-  const handlePlaceOrder = () => {
-    setCart([]);
-    setOrderPlace(true);
-    processOrder();
+  const history = useHistory()
+  const handleProceedCheckout = () => {
+    history.push('/shipment');
   };
   useEffect(() => {
     const savedCard = getDatabaseCart();
@@ -53,8 +53,8 @@ const Review = () => {
       </div>
       <div className="cart-container">
         <Cart cart={cart}>
-          <button onClick={handlePlaceOrder} className="main-btn">
-            Place Order
+          <button onClick={handleProceedCheckout} className="main-btn">
+            Proceed Checkout
           </button>
         </Cart>
       </div>
