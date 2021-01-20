@@ -15,10 +15,8 @@ export const UserContext = createContext();
 
 function App(props) {
   const [loggedInUser, setLoggedInUser] = useState({})
-  console.log(loggedInUser.email);
   return (
     <UserContext.Provider value={[loggedInUser, setLoggedInUser]}>
-      <p>logged in email:{loggedInUser.email}</p>
       <Router>
         <Header></Header>
         <Switch>
