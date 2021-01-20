@@ -21,6 +21,7 @@ export const handleGoogleSignIn = () => {
         name: displayName,
         email: email,
         photo: photoURL,
+        success: true
       };
       return signedInUser;
       // console.log(displayName, email, photoURL);
@@ -48,69 +49,68 @@ export const handleSignOut = () => {
     .catch((error) => {});
 };
 
-// export const createUserWithEmailAndPassword = () => {
-//   firebase
-//     .auth()
-//     .createUserWithEmailAndPassword(user.email, user.password)
-//     .then((res) => {
-//       const newUserInfo = { ...user };
-//       newUserInfo.error = "";
-//       newUserInfo.success = true;
-//       setUser(newUserInfo);
-//       updateUserName(user.name);
-//       // ...
-//     })
-//     .catch((error) => {
-//       const newUserInfo = { ...user };
-//       newUserInfo.error = error.message;
-//       newUserInfo.success = false;
-//       // var errorCode = error.code;
-//       // var errorMessage = error.message;
-//       // console.log(errorCode, errorMessage);
-//       setUser(newUserInfo);
-//     });
-// };
+export const createUserWithEmailAndPassword = (name, email, password) => {
+  return firebase
+    .auth()
+    .createUserWithEmailAndPassword(email, password)
+    .then((res) => {
+      const newUserInfo = res.user;
+      newUserInfo.error = "";
+      newUserInfo.success = true;
+      updateUserName(name);
+      return newUserInfo;
+      // ...
+    })
+    .catch((error) => {
+      const newUserInfo = {};
+      newUserInfo.error = error.message;
+      newUserInfo.success = false;
+      return newUserInfo;
+      // var errorCode = error.code;
+      // var errorMessage = error.message;
+      // console.log(errorCode, errorMessage);
+    });
+};
 
-// export const signInWithEmailAndPassword = () => {
-//   firebase
-//     .auth()
-//     .signInWithEmailAndPassword(user.email, user.password)
-//     .then((res) => {
-//       // Signed in
-//       // ...
-//       const newUserInfo = { ...user };
-//       newUserInfo.error = "";
-//       newUserInfo.success = true;
-//       setUser(newUserInfo);
-//       setLoggedInUser(newUserInfo);
-//       history.replace(from);
-//       //   console.log('sign in user info', res.user);
-//     })
-//     .catch((error) => {
-//       const newUserInfo = { ...user };
-//       newUserInfo.error = error.message;
-//       newUserInfo.success = false;
-//       // var errorCode = error.code;
-//       // var errorMessage = error.message;
-//       // console.log(errorCode, errorMessage);
-//       setUser(newUserInfo);
-//     });
-// };
+export const signInWithEmailAndPassword = (email, password) => {
+  return firebase
+    .auth()
+    .signInWithEmailAndPassword(email, password)
+    .then((res) => {
+      // Signed in
+      // ...
+      const newUserInfo = res.user;
+      newUserInfo.error = "";
+      newUserInfo.success = true;
+      return newUserInfo;
+    //   history.replace(from);
+      //   console.log('sign in user info', res.user);
+    })
+    .catch((error) => {
+      const newUserInfo = {};
+      newUserInfo.error = error.message;
+      newUserInfo.success = false;
+      // var errorCode = error.code;
+      // var errorMessage = error.message;
+      // console.log(errorCode, errorMessage);
+      return newUserInfo;
+    });
+};
 
-// const updateUserName = (name) => {
-//   const user = firebase.auth().currentUser;
+const updateUserName = (name) => {
+  const user = firebase.auth().currentUser;
 
-//   user
-//     .updateProfile({
-//       displayName: name,
-//       // photoURL: "https://example.com/jane-q-user/profile.jpg",
-//     })
-//     .then(function () {
-//       // Update successful.
-//       console.log("user name update successfully");
-//     })
-//     .catch(function (error) {
-//       // An error happened.
-//       console.log(error);
-//     });
-// };
+  user
+    .updateProfile({
+      displayName: name,
+      // photoURL: "https://example.com/jane-q-user/profile.jpg",
+    })
+    .then(function () {
+      // Update successful.
+      console.log("user name update successfully");
+    })
+    .catch(function (error) {
+      // An error happened.
+      console.log(error);
+    });
+};

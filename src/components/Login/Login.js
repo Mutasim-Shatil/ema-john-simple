@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { UserContext } from "../../App";
 import { useHistory, useLocation } from "react-router-dom";
-import { handleGoogleSignIn, initializeLoginFramework, handleSignOut } from "./LoginManager";
+import { handleGoogleSignIn, initializeLoginFramework, handleSignOut, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "./LoginManager";
 
 
 function Login() {
@@ -28,6 +28,7 @@ function Login() {
       .then(res => {
           setUser(res);
           setLoggedInUser(res);
+          history.replace(from);
       })
   }
   const signOut = () => {
@@ -57,11 +58,21 @@ function Login() {
 
   const handleSubmit = (e) => {
     if (newUser && user.email && user.password) {
-      
+       createUserWithEmailAndPassword(user.name, user.email, user.password)
+       .then(res => {
+           setUser(res);
+           setLoggedInUser(res);
+           history.replace(from);
+       })
     }
 
     if (!newUser && user.email && user.password) {
-      
+      signInWithEmailAndPassword(user.email, user.password)
+      .then((res) => {
+        setUser(res);
+        setLoggedInUser(res);
+        history.replace(from);
+      });
     }
     e.preventDefault();
   };
