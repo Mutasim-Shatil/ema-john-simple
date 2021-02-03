@@ -4,15 +4,19 @@ import { UserContext } from "../../App";
 import logo from "../../images/logo.png";
 import "./Header.css";
 function Header() {
-  const [loggedInUser, setLoggedInUser] = useContext(UserContext)
+  const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+
   return (
     <div className="header">
       <img src={logo} alt="" />
       <nav>
         <Link to="/shop">Shop</Link>
         <Link to="/review">Order Review</Link>
-        <Link to="/inventory">Manage Inventory</Link>
-        <button onClick= {() => setLoggedInUser({})}>Sign Out</button>
+        <Link to="/orders">Order History</Link>
+        <h4 className="user-name">{loggedInUser.name}</h4>
+        <button className="sign-out" onClick={() => setLoggedInUser({})}>
+          Sign out
+        </button>
       </nav>
     </div>
   );
